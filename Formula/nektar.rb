@@ -15,6 +15,7 @@ class Nektar < Formula
   head "https://gitlab.nektar.info/nektar/nektar.git"
 
   option "with-demos", "Compile Nektar++ demo executables"
+  option "with-tests", "Compile Nektar++ tests"
 
   depends_on "cmake"  => :run
   depends_on "boost"
