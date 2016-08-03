@@ -10,8 +10,8 @@ end
 class Nektar < Formula
   desc "Nektar++ spectral/hp element framework"
   homepage "https://www.nektar.info/"
-  url "http://www.nektar.info/downloads/file/nektar-4.3.2.tar.gz"
-  sha256 "afa20b74ed19165c9356f5ec5e33dac7de9bf48e7f2076db6488c7c03d331dd0"
+  url "http://www.nektar.info/downloads/file/nektar-4.3.3.tar.gz"
+  sha256 "3167d68154d0c0b2d2205456254d6812b958b0e1e6f649952f8b411dd6b3a9e9"
   head "https://gitlab.nektar.info/nektar/nektar.git"
 
   option "with-demos", "Compile Nektar++ demo executables"
@@ -43,9 +43,9 @@ class Nektar < Formula
 
   # GsMpi library extracted from Nek5000 code
   resource "gsmpi" do
-    url "https://www.nektar.info/thirdparty/gsmpi-1.2.tar.bz2",
+    url "https://www.nektar.info/thirdparty/gsmpi-1.2.1.tar.bz2",
       :using => NektarThirdPartyDownloadStrategy
-    sha256 "ffca1d418cb7e4353de89ee11fa9fdaa878d0de5110b95b9e13e43761098ec8e"
+    sha256 "c9d51109ec342ae93e9892821278d0d3c20d0559bbd4218e04ea27b911ce61a2"
   end
 
   def install
@@ -63,6 +63,8 @@ class Nektar < Formula
                              "-DNEKTAR_BUILD_UNIT_TESTS=OFF",
                              "-DZLIB_ROOT=#{Formula["zlib"].opt_prefix}"]
 
+    args << "-DNEKTAR_BUILD_TESTS=ON -DNEKTAR_BUILD_UNIT_TESTS=ON"  if build.with?    "tests"
+    args << "-DNEKTAR_BUILD_TESTS=OFF -DNEKTAR_BUILD_UNIT_TESTS=OFF" if build.without? "tests"
     args << "-DNEKTAR_BUILD_DEMOS=ON"  if build.with?    "demos"
     args << "-DNEKTAR_BUILD_DEMOS=OFF" if build.without? "demos"
     args << "-DNEKTAR_USE_MPI=ON"      if build.with?    :mpi
